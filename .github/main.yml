@@ -1,0 +1,185 @@
+
+name: rg
+
+on:
+  push:
+    branches:
+      - main
+      - 'feature/**'
+
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+env:
+  TF_VERSION: "1.9.8"
+  WORKING_DIR: "./environment/dev"
+
+  ARM_CLIENT_ID: "7b4464d6-33e7-4495-82f6-dd5441c87c78"
+  ARM_CLIENT_SECRET: "M4V8Q~1EC1tyD48zZs.t6k3tYi8urjhY.zehYbom"
+  ARM_TENANT_ID: "1d6a29b8-43b7-4c79-9bdf-c48c5d9b44dd"
+  ARM_SUBSCRIPTION_ID: "111116e2-8386-4181-b026-d821502e31cc"
+  ARM_USE_CLI: "false"
+
+jobs:
+
+  # ============================================================
+  # FEATURE BRANCH
+  # Terraform Format + Init + Validate + Plan
+  # ============================================================
+
+  terraform-feature:
+    name: Terraform Plan - Feature
+    if: startsWith(github.ref, 'refs/heads/feature/') || github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      # --------------------------------------------------------
+      # Terraform Setup
+      # --------------------------------------------------------
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: ${{ env.TF_VERSION }}
+
+      # --------------------------------------------------------
+      # Azure Login - Client Secret
+      # --------------------------------------------------------
+
+      - name: Azure Login
+        uses: azure/login@v3
+        with:
+          creds: |
+            {
+              "clientId": "7b4464d6-33e7-4495-82f6-dd5441c87c78",
+              "clientSecret": "zOz8Q~w8RR5kt4tfY4kwSkPNyGzXc0nFai2DeciG",
+              "subscriptionId": "111116e2-8386-4181-b026-d821502e31cc",
+              "tenantId": "1d6a29b8-43b7-4c79-9bdf-c48c5d9b44dd"
+            }
+
+      - name: Check Azure Login
+        run: az account show
+
+      # --------------------------------------------------------
+      # Terraform Format
+      # --------------------------------------------------------
+
+      - name: Terraform Format Check
+        working-directory: ${{ env.WORKING_DIR }}
+        run: terraform fmt -check -recursive
+
+      # --------------------------------------------------------
+      # Terraform Init
+      # --------------------------------------------------------
+
+      - name: Terraform Init
+        working-directory: ${{ env.WORKING_DIR }}
+        run: terraform init -reconfigure
+
+      # --------------------------------------------------------
+      # Terraform Validate
+      # --------------------------------------------------------
+
+      - name: Terraform Validate
+        working-directory: ${{ env.WORKING_DIR }}
+        run: terraform validate
+
+      # --------------------------------------------------------
+      # Terraform Plan
+      # --------------------------------------------------------
+
+      - name: Terraform Plan
+        working-directory: ${{ env.WORKING_DIR }}
+        run: terraform plan -out=tfplan
+
+
+  # ============================================================
+  # MAIN BRANCH
+  # Terraform Format + Init + Validate + Plan + Apply
+  # ============================================================
+
+  terraform-main:
+    name: Terraform Plan and Apply - Main
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      # --------------------------------------------------------
+      # Terraform Setup
+      # --------------------------------------------------------
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: ${{ env.TF_VERSION }}
+
+      # --------------------------------------------------------
+      # Azure Login - Client Secret
+      # --------------------------------------------------------
+
+      - name: Azure Login
+        uses: azure/login@v3
+        with:
+          creds: |
+            {
+              "clientId": "7b4464d6-33e7-4495-82f6-dd5441c87c78",
+              "clientSecret": "zOz8Q~w8RR5kt4tfY4kwSkPNyGzXc0nFai2DeciG",
+              "subscriptionId": "111116e2-8386-4181-b026-d821502e31cc",
+              "tenantId": "1d6a29b8-43b7-4c79-9bdf-c48c5d9b44dd"
+            }
+
+      - name: Check Azure Login
+        run: az account show
+
+      # --------------------------------------------------------
+      # Terraform Format
+      # --------------------------------------------------------
+
+      - name: Terraform Format Check
+        working-directory: ${{ env.WORKING_DIR }}
+        run: terraform fmt -check -recursive
+
+      # --------------------------------------------------------
+      # Terraform Init
+      # --------------------------------------------------------
+
+      - name: Terraform Init
+        working-directory: ${{ env.WORKING_DIR }}
+        run: terraform init -reconfigure
+
+      # --------------------------------------------------------
+      # Terraform Validate
+      # --------------------------------------------------------
+
+      - name: Terraform Validate
+        working-directory: ${{ env.WORKING_DIR }}
+        run: terraform validate
+
+      # --------------------------------------------------------
+      # Terraform Plan
+      # --------------------------------------------------------
+
+      - name: Terraform Plan
+        working-directory: ${{ env.WORKING_DIR }}
+        run: terraform plan -out=tfplan
+
+      # --------------------------------------------------------
+      # Terraform Apply
+      # --------------------------------------------------------
+
+      - name: Terraform Apply
+        working-directory: ${{ env.WORKING_DIR }}
+        run: terraform apply -auto-approve tfplan
+
