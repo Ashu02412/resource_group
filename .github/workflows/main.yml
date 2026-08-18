@@ -148,7 +148,7 @@ jobs:
       # --------------------------------------------------------
 
       - name: Terraform Format Check
-        working-directory: ${{ env.WORKING_DIR }}
+        working-directory: ./environment/dev
         run: terraform fmt -check -recursive
 
       # --------------------------------------------------------
@@ -156,7 +156,7 @@ jobs:
       # --------------------------------------------------------
 
       - name: Terraform Init
-        working-directory: ${{ env.WORKING_DIR }}
+        working-directory: ./environment/dev
         run: terraform init -reconfigure
 
       # --------------------------------------------------------
@@ -164,7 +164,7 @@ jobs:
       # --------------------------------------------------------
 
       - name: Terraform Validate
-        working-directory: ${{ env.WORKING_DIR }}
+        working-directory: ./environment/dev
         run: terraform validate
 
       # --------------------------------------------------------
@@ -172,7 +172,7 @@ jobs:
       # --------------------------------------------------------
 
       - name: Terraform Plan
-        working-directory: ${{ env.WORKING_DIR }}
+        working-directory: ./environment/dev
         run: terraform plan -out=tfplan
 
       # --------------------------------------------------------
@@ -180,6 +180,6 @@ jobs:
       # --------------------------------------------------------
 
       - name: Terraform Apply
-        working-directory: ${{ env.WORKING_DIR }}
+        working-directory: ./environment/dev
         run: terraform apply -auto-approve tfplan
 
