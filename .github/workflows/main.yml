@@ -15,7 +15,7 @@ permissions:
 
 env:
   TF_VERSION: "1.9.8"
-  working-directory: "./environment/dev"
+  working-directory: ./environment/dev
 
   
   ARM_CLIENT_ID: "076a5682-82e0-4c00-b9f5-38d0a4b55aad"
@@ -97,7 +97,7 @@ jobs:
       # --------------------------------------------------------
 
       - name: Terraform Plan
-        working-directory: ${{ env.WORKING_DIR }}
+        working-directory: ./environment/dev
         run: terraform plan -out=tfplan
 
 
