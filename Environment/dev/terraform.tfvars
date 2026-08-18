@@ -5,7 +5,7 @@ rg = {
     location = "West Europe"
   }
 
-  dev1 = {
+  dev2 = {
 
     name     = "ashu_rg1"
     location = "West Europe"
