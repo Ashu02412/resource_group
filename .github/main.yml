@@ -18,6 +18,7 @@ env:
   TF_VERSION: "1.9.8"
   WORKING_DIR: "./environment/dev"
 
+  
   ARM_CLIENT_ID: "076a5682-82e0-4c00-b9f5-38d0a4b55aad"
   ARM_CLIENT_SECRET: "M4V8Q~1EC1tyD48zZs.t6k3tYi8urjhY.zehYbom"
   ARM_TENANT_ID: "1d6a29b8-43b7-4c79-9bdf-c48c5d9b44dd"
@@ -59,8 +60,8 @@ jobs:
         with:
           creds: |
             {
-              "clientId": "7b4464d6-33e7-4495-82f6-dd5441c87c78",
-              "clientSecret": "zOz8Q~w8RR5kt4tfY4kwSkPNyGzXc0nFai2DeciG",
+              "clientId": "076a5682-82e0-4c00-b9f5-38d0a4b55aad",
+              "clientSecret": "M4V8Q~1EC1tyD48zZs.t6k3tYi8urjhY.zehYbom",
               "subscriptionId": "111116e2-8386-4181-b026-d821502e31cc",
               "tenantId": "1d6a29b8-43b7-4c79-9bdf-c48c5d9b44dd"
             }
@@ -134,8 +135,8 @@ jobs:
         with:
           creds: |
             {
-              "clientId": "7b4464d6-33e7-4495-82f6-dd5441c87c78",
-              "clientSecret": "zOz8Q~w8RR5kt4tfY4kwSkPNyGzXc0nFai2DeciG",
+              "clientId": "076a5682-82e0-4c00-b9f5-38d0a4b55aad",
+              "clientSecret": "M4V8Q~1EC1tyD48zZs.t6k3tYi8urjhY.zehYbom",
               "subscriptionId": "111116e2-8386-4181-b026-d821502e31cc",
               "tenantId": "1d6a29b8-43b7-4c79-9bdf-c48c5d9b44dd"
             }
