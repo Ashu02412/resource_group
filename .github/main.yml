@@ -1,5 +1,5 @@
 
-name: rg
+name: resource_group
 
 on:
   push:
@@ -20,7 +20,7 @@ env:
 
   
   ARM_CLIENT_ID: "076a5682-82e0-4c00-b9f5-38d0a4b55aad"
-  ARM_CLIENT_SECRET: "M4V8Q~1EC1tyD48zZs.t6k3tYi8urjhY.zehYbom"
+  ARM_CLIENT_SECRET: "o~G8Q~3vAGgANwcoCPWddzMiIUZ99MbInMB7vdAt"
   ARM_TENANT_ID: "1d6a29b8-43b7-4c79-9bdf-c48c5d9b44dd"
   ARM_SUBSCRIPTION_ID: "111116e2-8386-4181-b026-d821502e31cc"
   ARM_USE_CLI: "false"
@@ -55,6 +55,19 @@ jobs:
       # Azure Login - Client Secret
       # --------------------------------------------------------
 
+      - name: Azure Login
+        uses: azure/login@v3
+        with:
+          creds: |
+            {
+              "clientId": "076a5682-82e0-4c00-b9f5-38d0a4b55aad",
+              "clientSecret": "o~G8Q~3vAGgANwcoCPWddzMiIUZ99MbInMB7vdAt",
+              "subscriptionId": "111116e2-8386-4181-b026-d821502e31cc",
+              "tenantId": "1d6a29b8-43b7-4c79-9bdf-c48c5d9b44dd"
+            }
+
+      - name: Check Azure Login
+        run: az account show
 
       # --------------------------------------------------------
       # Terraform Format
