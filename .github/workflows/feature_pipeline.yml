@@ -24,7 +24,7 @@ jobs:
 
     defaults:
       run:
-        working-directory: ./environments/DEV
+        working-directory: .\Landing_Zone\resource_group\Environment
 
     steps:
 
