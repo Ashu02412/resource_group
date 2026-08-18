@@ -129,8 +129,7 @@ jobs:
       # --------------------------------------------------------
       # Azure Login - Client Secret
       # --------------------------------------------------------
-
-      - 
+      
       - name: Check Azure Login
         run: az account show
 
