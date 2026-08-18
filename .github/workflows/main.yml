@@ -1,11 +1,10 @@
-
-name: resource_group
+name:  resource_group
 
 on:
   push:
     branches:
       - main
-      - 'feature/**'
+      - rg
 
   pull_request:
     branches:
